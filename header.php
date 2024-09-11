@@ -75,45 +75,128 @@
 
 		</section>
 
+		<?php
+		// Define seu array de post types e URLs manualmente
+		$post_types = [
+			'C4' => 'C.4',
+			'C5' => 'C.5',
+			'C6' => 'C.6',
+			'C7' => 'C.7',
+			'C8' => 'C.8',
+			'C12' => 'C.12',
+			'S8' => 'S.8',
+			'S9' => 'S.9',
+			'S10' => 'S.10',
+			'S12' => 'S.12',
+			'S15' => 'S.15',
+			'S18' => 'S.18',
+		];
 
+		// Defina URLs manualmente
+		$base_url = home_url();
+		$urls = [
+			'C4' => $base_url . '/C4/',
+			'C5' => $base_url . '/C5/',
+			'C6' => $base_url . '/C6/',
+			'C7' => $base_url . '/C7/',
+			'C8' => $base_url . '/C8/',
+			'C12' => $base_url . '/C12/',
+			'S8' => $base_url . '/S8/',
+			'S9' => $base_url . '/S9/',
+			'S10' => $base_url . '/S10/',
+			'S12' => $base_url . '/S12/',
+			'S15' => $base_url . '/S15/',
+			'S18' => $base_url . '/S18/',
+		];
+
+		// Início do HTML
+		?>
 		<div class="container">
 			<div class="row justify-content-center align-items-center text-center homes">
-				<div class="col-md-1">
-					<a href="#">C.4</a>
+				<?php foreach ($post_types as $post_type_key => $post_type_label) : ?>
+					<?php
+					// Obtém a URL manualmente definida para o post type
+					$post_type_archive_url = isset($urls[$post_type_key]) ? $urls[$post_type_key] : '';
+					?>
+					<div class="col-md-1">
+						<?php if ($post_type_archive_url) : ?>
+							<a href="<?php echo esc_url($post_type_archive_url); ?>">
+								<?php echo esc_html($post_type_label); ?>
+							</a>
+						<?php else : ?>
+							<span>URL não definida</span>
+						<?php endif; ?>
+					</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+
+	</header><!-- #header -->
+
+	<style>
+		.btn-bottom {
+			background-color: #F3F2ED;
+			color: #00260A;
+			border-bottom: 1px solid black;
+			font-weight: 600;
+			font-size: 22px;
+		}
+
+		.btn-bottom:hover {
+			background-color: #8BC751;
+
+		}
+
+		.tipo-casa {
+			font-size: 20px;
+		}
+
+		.tipo-casa:hover {
+			background-color: #8BC751;
+
+		}
+	</style>
+
+	
+<?php if (is_singular('c4')): ?>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-12">
+					<div class="p-2 mt-4 text-center bottom-header">
+						<button class="btn-bottom btn w-100">Plantas e Fachadas</button>
+					</div>
 				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
+				<div class="col-md-4 col-12">
+					<div class="p-2 mt-4 text-center bottom-header">
+						<button class="btn-bottom btn w-100">Acabamento e detalhes</button>
+					</div>
 				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
-				</div>
-				<div class="col-md-1">
-					<a href="#">C.4</a>
+				<div class="col-md-4 col-12">
+					<div class="p-2 mt-4 text-center bottom-header">
+						<button class="btn-bottom btn w-100">Videos</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</header><!-- #header -->
+	</section>
+	
+	<?php endif; ?>
+
+
+	<?php if (!is_home()): ?>
+
+		<section class="mt-5">
+			<div class="container">
+				<div class="row flex-wrap">
+					<?php foreach ($posts as $post): ?>
+						<div class="col-md-2">
+							<button class="btn tipo-casa w-100" onclick="window.location.href='<?= $post->guid; ?>';"><?= $post->post_title; ?></button>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</section>
+
+	<?php endif; ?>

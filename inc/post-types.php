@@ -23,7 +23,7 @@ function create_custom_post_types()
         'singular_name' => $name,
       ],
       'public' => true,
-      'has_archive' => false,
+      'has_archive' => true,
       'menu_icon' => 'dashicons-admin-home',
       'supports' => ['title'],
       'rewrite' => ['slug' => $slug],
@@ -268,42 +268,75 @@ function add_custom_meta_boxes()
     );
   }
 
-  // Adicionando Acabamentos e Detalhes
-  foreach ($post_types as $post_type) {
-    $meta_box = new Odin_Metabox(
-      'acabamentos_e_detalhes', // ID único
-      'Acabamentos e Detalhes', // Título da metabox
-      $post_type, // Custom post type ao qual a metabox será adicionada
-      'normal', // Contexto (normal, side, etc.)
-      'high' // Prioridade
-    );
-
-    $meta_box->set_fields([
-      [
-        'id' => 'custom_field_id',
-        'label' => 'Campo Customizado',
-        'type' => 'text', // Tipo do campo (text, textarea, select, etc.)
-      ]
-    ]);
-  }
-
-  // Adicionando Videos
-  foreach ($post_types as $post_type) {
-    $meta_box = new Odin_Metabox(
-      'videos', // ID único
-      'Videos', // Título da metabox
-      $post_type, // Custom post type ao qual a metabox será adicionada
-      'normal', // Contexto (normal, side, etc.)
-      'high' // Prioridade
-    );
-
-    $meta_box->set_fields([
-      [
-        'id' => 'custom_field_id',
-        'label' => 'Campo Customizado',
-        'type' => 'text', // Tipo do campo (text, textarea, select, etc.)
-      ]
-    ]);
-  }
 }
 add_action('init', 'add_custom_meta_boxes');
+
+
+
+
+// Função para criar a metabox de galeria
+function add_gallery_meta_box() {
+  $post_types = ['C4', 'C5', 'C6', 'C7', 'C8', 'C12', 'S8', 'S9', 'S10', 'S12', 'S15', 'S18'];
+  foreach ($post_types as $post_type) {
+      add_meta_box(
+          'gallery_meta_box', // ID da metabox
+          'Galeria de Imagens', // Título
+          'render_gallery_meta_box', // Função de renderização
+          $post_type, // Tipos de post
+          'normal', // Contexto
+          'high' // Prioridade
+      );
+  }
+}
+add_action('add_meta_boxes', 'add_gallery_meta_box');
+
+// Função para renderizar o conteúdo da metabox
+function render_gallery_meta_box($post) {
+  // Campo nonce para segurança
+  wp_nonce_field('save_gallery_meta_box', 'gallery_meta_box_nonce');
+
+  // Recupera as imagens salvas
+  $gallery_images = get_post_meta($post->ID, '_gallery_images', true);
+  ?>
+
+  <div id="gallery_container">
+      <button id="add_image_button" class="button">Adicionar Imagem</button>
+      <ul id="gallery_images_list">
+          <?php
+          if (!empty($gallery_images)) {
+              foreach ($gallery_images as $image_id) {
+                  // Recupera o URL da miniatura usando wp_get_attachment_image_url()
+                  $image_url = wp_get_attachment_image_url($image_id, 'thumbnail');
+                  echo '<li><input type="hidden" name="gallery_images[]" value="' . esc_attr($image_id) . '" />';
+                  echo '<img src="' . esc_url($image_url) . '" style="max-width: 100px; margin: 5px;" />';
+                  echo '<button class="remove_image_button button">Remover</button></li>';
+              }
+          }
+          ?>
+      </ul>
+  </div>
+
+  <?php
+}
+
+// Função para salvar as imagens da galeria
+function save_gallery_meta_box_data($post_id) {
+  // Verifica o nonce
+  if (!isset($_POST['gallery_meta_box_nonce']) || !wp_verify_nonce($_POST['gallery_meta_box_nonce'], 'save_gallery_meta_box')) {
+      return;
+  }
+
+  // Verifica a permissão de edição
+  if (!current_user_can('edit_post', $post_id)) {
+      return;
+  }
+
+  // Salva as imagens da galeria
+  if (isset($_POST['gallery_images'])) {
+      $image_ids = array_map('sanitize_text_field', $_POST['gallery_images']);
+      update_post_meta($post_id, '_gallery_images', $image_ids);
+  } else {
+      delete_post_meta($post_id, '_gallery_images');
+  }
+}
+add_action('save_post', 'save_gallery_meta_box_data');

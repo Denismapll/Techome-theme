@@ -323,3 +323,61 @@ if ( is_woocommerce_activated() ) {
 
 require_once get_template_directory() . '/inc/post-types.php';
 
+function load_gallery_meta_box_js() {
+	wp_enqueue_media();
+	wp_enqueue_script('gallery-meta-box-js', get_template_directory_uri() . '/assets/js/gallery-meta-box.js', array('jquery'), null, true);
+}
+add_action('admin_enqueue_scripts', 'load_gallery_meta_box_js');
+
+
+function redirect_to_first_child_post() {
+	// Define seu array de post types
+	$post_types = [
+			'C4' => 'C.4',
+			'C5' => 'C.5',
+			'C6' => 'C.6',
+			'C7' => 'C.7',
+			'C8' => 'C.8',
+			'C12' => 'C.12',
+			'S8' => 'S.8',
+			'S9' => 'S.9',
+			'S10' => 'S.10',
+			'S12' => 'S.12',
+			'S15' => 'S.15',
+			'S18' => 'S.18',
+	];
+
+	// Verifica se estamos na página de arquivo de algum post type do array
+	foreach ($post_types as $post_type_key => $post_type_label) {
+			if (is_post_type_archive($post_type_key)) {
+					error_log('Redirecionando post type: ' . $post_type_key); // Adicione isto para depuração
+
+					// Define os parâmetros da query para buscar os posts
+					$args = array(
+							'post_type' => $post_type_key, // Utiliza o post type atual
+							'posts_per_page' => 1, // Apenas o primeiro post
+							'orderby' => 'date', // Ordena pelo mais recente
+							'order' => 'ASC' // Ordena de forma crescente
+					);
+
+					// Faz a consulta para pegar o primeiro post
+					$first_post_query = new WP_Query($args);
+
+					if ($first_post_query->have_posts()) {
+							$first_post_query->the_post();
+							// Pega o link do primeiro post
+							$first_post_url = get_permalink();
+
+							error_log('Redirecionando para: ' . $first_post_url); // Adicione isto para depuração
+
+							// Faz o redirecionamento
+							wp_redirect($first_post_url);
+							exit;
+					}
+
+					// Reseta a query após terminar a consulta
+					wp_reset_postdata();
+			}
+	}
+}
+add_action('template_redirect', 'redirect_to_first_child_post');

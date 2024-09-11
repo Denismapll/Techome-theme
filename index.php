@@ -17,7 +17,11 @@ get_header(); ?>
 
 	<main id="content">
 
-			
+			<section>
+				<div class="container">
+					
+				</div>
+			</section>
 
 	</main><!-- #content -->
 
