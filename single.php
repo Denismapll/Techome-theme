@@ -10,7 +10,9 @@ get_header(); ?>
 
 		<main>
 
-		
+		<?php 
+			print_r(get_post_meta(get_the_ID()))
+		?>
 
 		</main><!-- #main -->
 
