@@ -27,10 +27,31 @@ function create_custom_post_types()
       'menu_icon' => 'dashicons-admin-home',
       'supports' => ['title'],
       'rewrite' => ['slug' => $slug],
+      'show_in_menu' => 'edit.php?post_type=c_s_group', // Menu pai para agrupar os post types
+
     ]);
   }
 }
 add_action('init', 'create_custom_post_types');
+
+
+
+
+// Adicionar o menu pai "C e S"
+function add_custom_menu_page()
+{
+  add_menu_page(
+    'Casas', // Título da página
+    'Casas', // Título do menu
+    'manage_options', // Capability
+    'edit.php?post_type=c_s_group', // Slug do menu pai
+    '', // Função callback (opcional)
+    'dashicons-admin-home', // Ícone do menu
+    20 // Posição do menu
+  );
+}
+add_action('admin_menu', 'add_custom_menu_page');
+
 
 // Adicionando Plantas e Fachadas
 function add_custom_meta_boxes()
@@ -84,6 +105,67 @@ function add_custom_meta_boxes()
           'id'   => 'separator1', // Obrigatório
           'type' => 'separator' // Obrigatório
         ),
+
+
+        array(
+          'id'   => 'right-side3', // Required
+          'label' => __('Opcionais', 'odin'), // Required
+          'type' => 'title', // Required
+        ),
+        array(
+          'id'          => 'muro_casa', // Obrigatório
+          'label'       => __('Muro e portão', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Informações sobre Muro e Portão')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
+        array(
+          'id'          => 'area_gourmet_casa', // Obrigatório
+          'label'       => __('Área Gourmet', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Informações sobre Area Gourmet')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
+        array(
+          'id'          => 'quartos_casa', // Obrigatório
+          'label'       => __('Quartos', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Informações sobre Quartos')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
+        array(
+          'id'          => 'smart_kit_casa', // Obrigatório
+          'label'       => __('Kit Smart Home', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Informações sobre Kit Smart Home')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
+        array(
+          'id'          => 'cozinha_casa', // Obrigatório
+          'label'       => __('Cozinha', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Informações sobre Cozinha')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
+        array(
+          'id'          => 'grama_casa', // Obrigatório
+          'label'       => __('Grama externa / Jardim', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Informações sobre Area Externa')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
       )
     );
   }
@@ -99,7 +181,7 @@ function add_custom_meta_boxes()
 
     $meta_box->set_fields(
       array(
-        
+
         array(
           'id'   => 'right-side2', // Required
           'label' => __('Marque a checkbox do que tiver na casa', 'odin'), // Required
@@ -111,17 +193,77 @@ function add_custom_meta_boxes()
           'type'        => 'checkbox', // Required
           // 'attributes' => array(), // Optional (html input elements)
           // 'default'    => 'no', // Optional ('yes' for checked)
-          'description' => __('Checkbox field description', 'odin'), // Optional
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
         ),
         array(
           'id'          => 'suites_casa', // Obrigatório
           'label'       => __('Suites / Quartos', 'odin'), // Obrigatório
-          'type'        => 'textarea', // Obrigatório
+          'type'        => 'text', // Obrigatório
           'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
-            'placeholder' => __('Quantidade de suites e quartos')
+            'placeholder' => __('suites e quartos')
           ),
-          'description' => __('Exemplo: 2 suítes + 2 quartos', 'odin'), // Opcional
+          'description' => __('Caso checkbox acima estiver marcado, Exemplo: 2 suítes + 2 quartos', 'odin'), // Opcional
         ),
+        array(
+          'id'          => 'checkbox_banheiro', // Required
+          'label'       => __('Banheiro', 'odin'), // Required
+          'type'        => 'checkbox', // Required
+          // 'attributes' => array(), // Optional (html input elements)
+          // 'default'    => 'no', // Optional ('yes' for checked)
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
+        ),
+        array(
+          'id'          => 'checkbox_lavabo', // Required
+          'label'       => __('Lavabo', 'odin'), // Required
+          'type'        => 'checkbox', // Required
+          // 'attributes' => array(), // Optional (html input elements)
+          // 'default'    => 'no', // Optional ('yes' for checked)
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
+        ),
+        array(
+          'id'          => 'checkbox_sala', // Required
+          'label'       => __('Sala de estar', 'odin'), // Required
+          'type'        => 'checkbox', // Required
+          // 'attributes' => array(), // Optional (html input elements)
+          // 'default'    => 'no', // Optional ('yes' for checked)
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
+        ),
+        array(
+          'id'          => 'checkbox_jantar', // Required
+          'label'       => __('Jantar', 'odin'), // Required
+          'type'        => 'checkbox', // Required
+          // 'attributes' => array(), // Optional (html input elements)
+          // 'default'    => 'no', // Optional ('yes' for checked)
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
+        ),
+        array(
+          'id'          => 'checkbox_cozinha_integrada', // Required
+          'label'       => __('Cozinha Integra', 'odin'), // Required
+          'type'        => 'checkbox', // Required
+          // 'attributes' => array(), // Optional (html input elements)
+          // 'default'    => 'no', // Optional ('yes' for checked)
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
+        ),
+        array(
+          'id'          => 'checkbox_lavanderia', // Required
+          'label'       => __('Lavanderia', 'odin'), // Required
+          'type'        => 'checkbox', // Required
+          // 'attributes' => array(), // Optional (html input elements)
+          // 'default'    => 'no', // Optional ('yes' for checked)
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
+        ),
+        array(
+          'id'          => 'checkbox_vaga', // Required
+          'label'       => __('Vaga Coberta', 'odin'), // Required
+          'type'        => 'checkbox', // Required
+          // 'attributes' => array(), // Optional (html input elements)
+          // 'default'    => 'no', // Optional ('yes' for checked)
+          // 'description' => __('Checkbox field description', 'odin'), // Optional
+        ),
+        array(
+          'id'   => 'separator1', // Obrigatório
+          'type' => 'separator' // Obrigatório
+        )
       )
     );
   }

@@ -322,3 +322,4 @@ if ( is_woocommerce_activated() ) {
 }
 
 require_once get_template_directory() . '/inc/post-types.php';
+
