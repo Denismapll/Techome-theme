@@ -23,6 +23,44 @@
 	<?php wp_head(); ?>
 </head>
 
+
+<script>
+	window.onload = () => {
+		const menu = document.querySelectorAll('.menu-interno');
+
+		var currentUrl = window.location.href;
+
+		var urlParts = currentUrl.split('/');
+
+		var lastSection = urlParts[urlParts.length - 1];
+
+		if (lastSection === "") {
+			lastSection = urlParts[urlParts.length - 2];
+		}
+
+		// console.log(urlParts);
+
+		switch (lastSection) {
+			case '?pg=plantas':
+				menu[0].classList.add('escolhido');
+				break;
+			case '?pg=acabamento':
+				menu[1].classList.add('escolhido');
+
+				break;
+			case '?pg=videos':
+				menu[2].classList.add('escolhido');
+				break;
+
+			default:
+				menu[0].classList.add('escolhido');
+				break;
+		}
+
+	};
+</script>
+
+
 <body <?php body_class(); ?>>
 
 	<style>
@@ -149,39 +187,45 @@
 
 		.tipo-casa {
 			font-size: 20px;
+			background-color: #f2f1eb;
+			font-weight: 500;
 		}
 
 		.tipo-casa:hover {
 			background-color: #8BC751;
 
 		}
+
+		.escolhido {
+			background-color: #8BC751;
+		}
 	</style>
 
-	
-<?php if (is_singular('c4')): ?>
 
-	<section>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 col-12">
-					<div class="p-2 mt-4 text-center bottom-header">
-						<button class="btn-bottom btn w-100">Plantas e Fachadas</button>
+	<?php if (is_singular('c4')): ?>
+
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-12">
+						<div class="p-2 mt-4 text-center bottom-header">
+							<button id="plantas" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href='?pg=plantas'">Plantas e Fachadas</button>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-4 col-12">
-					<div class="p-2 mt-4 text-center bottom-header">
-						<button class="btn-bottom btn w-100">Acabamento e detalhes</button>
+					<div class="col-md-4 col-12">
+						<div class="p-2 mt-4 text-center bottom-header">
+							<button id="acabamento" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-4 col-12">
-					<div class="p-2 mt-4 text-center bottom-header">
-						<button class="btn-bottom btn w-100">Videos</button>
+					<div class="col-md-4 col-12">
+						<div class="p-2 mt-4 text-center bottom-header">
+							<button id="videos" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=videos')">Videos</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-	
+		</section>
+
 	<?php endif; ?>
 
 
