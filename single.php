@@ -54,6 +54,14 @@ get_header(); ?>
 		.borda-bottom {
 			border-top: 1px solid black;
 		}
+
+		.carousel-indicators [data-bs-target] {
+			border-bottom: 10px solid black;
+		}
+
+		.carousel-indicators {
+			bottom: -40px !important;
+		}
 	</style>
 
 
@@ -86,7 +94,6 @@ get_header(); ?>
 								<div class="carousel-indicators">
 									<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 									<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-									<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 								</div>
 								<div class="carousel-inner">
 									<div class="carousel-item active">
@@ -121,7 +128,7 @@ get_header(); ?>
 							<h6>A partir de R$<?= $data_page['valor_casa'][0]; ?></h6>
 							<div class="side-right1">
 								<h6>Disponibilidade da casa de acordo com o lote</h6>
-								<b>LOTE MÍNIMO 10 X 25M</b>
+								<b><?= $data_page['lote_minimo'][0]; ?></b>
 							</div>
 
 							<div class="side-right1">
@@ -180,37 +187,37 @@ get_header(); ?>
 								<h4 style="margin-top: 25px;"><b>Opcionais</b></h4>
 								<?php if (isset($data_page['muro_casa'])): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/muro.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/muro.png" alt="" srcset="">
 										<span><?= $data_page['muro_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
 								<?php if (isset($data_page['area_gourmet_casa'])): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/gourmet.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/gourmet.png" alt="" srcset="">
 										<span><?= $data_page['area_gourmet_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
 								<?php if (isset($data_page['quartos_casa'])): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/camas.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/camas.png" alt="" srcset="">
 										<span><?= $data_page['quartos_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
 								<?php if (isset($data_page['smart_kit_casa'])): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/smart.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/smart.png" alt="" srcset="">
 										<span><?= $data_page['smart_kit_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
 								<?php if (isset($data_page['cozinha_casa'])): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/cozinha.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/cozinha.png" alt="" srcset="">
 										<span><?= $data_page['cozinha_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
 								<?php if (isset($data_page['grama_casa'])): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/grama.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/grama.png" alt="" srcset="">
 										<span><?= $data_page['grama_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
@@ -249,6 +256,140 @@ get_header(); ?>
 	<?php endif; ?>
 
 	<!-- SECÇÃO PRINCIPAL - ACABAMENTO E DETALHES -->
+
+	<?php if ($show_page['pg'] == "acabamento"): ?>
+
+		<section>
+			<div class="container">
+				<div class="d-flex align-items-center justify-content-between">
+					<div class="title mr-4 d-flex gap-3 align-items-center">
+						<h1>Conheça a <?= the_title(); ?></h1>
+						<span class="metros"><?php print_r($data_page['metros_casa'][0]) ?></span>
+					</div>
+					<div>
+						<p>Disponibilidade da casa de acordo com o lote <b><?= $data_page['lote_minimo'][0]; ?></b></p>
+					</div>
+				</div>
+				<h6>A partir de R$<?= $data_page['valor_casa'][0]; ?></h6>
+			</div>
+		</section>
+
+		<!-- SECÇÃO PRINCIPAL - ACABAMENTO E DETALHES -->
+		<section>
+			<div class="container">
+				<div class="row">
+
+					<style>
+						.light-green {
+							color: #8BC751;
+						}
+
+						.selected-list {
+							list-style: none;
+							border-left: 6px solid #8BC751 !important;
+							padding-left: 17px;
+						}
+
+						.lateral {
+							margin-bottom: 35px;
+						}
+
+						.lateral ul li {
+							list-style: none;
+							padding-left: 20px;
+							border-left: 6px solid transparent;
+							margin: 12px 0 !important;
+						}
+
+						.lateral ul li a {
+							color: black;
+							text-decoration: none;
+							font-weight: 500;
+							font-size: 19px;
+						}
+
+						.shadow-right {
+							box-shadow: 10px 2px 20px -9px;
+						}
+					</style>
+
+					<div class="col-md-4 col-12 mt-4">
+						<div class="bg-cinza shadow-right h-100 w-100">
+
+
+							<div class="lateral">
+								<h3 class="light-green">ACABAMENTOS</h3>
+								<ul class="m-0 p-0 acabamentos-opcoes" style="margin-top: 30px !important">
+									<li class="selected-list"><a href="#">Pisos</a></li>
+									<li><a href="#">Paredes</a></li>
+									<li><a href="#">Metais & Granitos</a></li>
+									<li><a href="#">Acabamento externo</a></li>
+									<li><a href="#">Louças</a></li>
+									<li><a href="#">Portas e esquadrias</a></li>
+								</ul>
+							</div>
+
+							<div class="lateral">
+								<h3 class="light-green">DIFERENCIAIS DA ENTREGA TECHOME</h3>
+								<ul class="m-0 p-0 acabamentos-opcoes" style="margin-top: 30px !important">
+									<li><a href="#">Infraestrutura seca</a></li>
+									<li><a href="#">Espera de energia fotovoltaica</a></li>
+									<li><a href="#">Instalação de encanamento a gás para cozinha e banheiros</a></li>
+									<li><a href="#">Pressurizador na rede de água quente</a></li>
+									<li><a href="#">Chuveiros</a></li>
+									<li><a href="#">Ponto elétrico para chuveiros</a></li>
+									<li><a href="#">Ponto preparado para instalação de ar condicionado na sala, quartos e suíte</a></li>
+									<li><a href="#">Preparação para carro elétrico</a></li>
+									<li><a href="#">Guarda corpos de vidro nas escadas**</a></li>
+									<li><a href="#">Pé direito de 2,80M**</a></li>
+									<li><a href="#">Escada com revestimento em granito**</a></li>
+								</ul>
+							</div>
+
+
+						</div>
+					</div>
+
+					<div class="col-md-8 col-12 mt-4">
+
+						<div class="row p-3">
+							<div class="col-md-6 col-12 mt-4">
+								<h3 class="fw-bold">Pisos</h3>
+								<p>As casas Techome tem como padrão de entrega o piso cerâmico
+									nas áreas molhadas (banheiros e cozinha) e contrapiso nas
+									áreas secas - com opções de acabamento adicional em
+									laminado ou cerâmica.</p>
+							</div>
+							<div class="col-md-6 col-12 mt-4"></div>
+							<div class="col-md-6 col-12 mt-4">
+								<h5><b>Banheiros |</b> Porcelanato 60 x 60cm.</h5>
+								<div class="d-flex justify-content-center align-items-center">
+									<img src="http://localhost/Techome/wp-content/uploads/2024/09/exemplo-pisos.png" alt="" srcset="">
+								</div>
+							</div>
+							<div class="col-md-6 col-12 mt-4">
+								<h5><b>Áreas molhadas |</b> Porcelanato 60 x 60cm e rodapé em EPS com h = 12cm.</h5>
+								<div class="d-flex justify-content-center align-items-center">
+									<img src="http://localhost/Techome/wp-content/uploads/2024/09/exemplo-molhado.png" alt="" srcset="">
+								</div>
+							</div>
+							<div class="col-md-6 col-12 mt-4">
+								<h5><b>Áreas secas |</b> Piso laminado e rodapé em EPS com h = 12cm.</h5>
+								<div class="d-flex justify-content-center align-items-center">
+									<img src="http://localhost/Techome/wp-content/uploads/2024/09/exemplo-secos.png" alt="" srcset="">
+								</div>
+							</div>
+						</div>
+
+						<div class="p-4 mt-4">
+							<p>A especificação, cor e/ou marca dos itens de acabamento louças sanitárias e metais podem ser alteradas por outra similar, a depender da disponibilidade no mercado.</p>
+						</div>
+
+					</div>
+				</div>
+		</section>
+
+	<?php endif; ?>
 
 	<!-- SECÇÃO PRINCIPAL - VIDEOS -->
 

@@ -381,3 +381,5 @@ function redirect_to_first_child_post() {
 	}
 }
 add_action('template_redirect', 'redirect_to_first_child_post');
+
+$icons = get_stylesheet_directory_uri().'/assets/images';

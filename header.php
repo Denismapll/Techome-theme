@@ -102,9 +102,10 @@
 		<section class="row justify-content-center align-items-center text-center">
 
 			<div class="text-center p-5 header-bg">
-				<a href="#">
-					<img src="http://localhost/Techome/wp-content/uploads/2024/09/logo-header.png" alt="logo-techome" srcset="">
+				<a href="<?php echo home_url();?>">
+					<img src="<?php echo get_stylesheet_directory_uri().'/assets/images';?>/icone_header.png" alt="logo-techome" srcset="">
 				</a>
+				
 			</div>
 
 			<div class="text-center p-3">
