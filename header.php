@@ -58,6 +58,13 @@
 		}
 
 	};
+
+	function resize(video) {
+		width = video.clientWidth;
+		height = width * 0.56;
+
+		video.style.height = height + 'px';
+	}
 </script>
 
 
@@ -96,16 +103,20 @@
 			background-color: #ECECE3;
 
 		}
+
+		iframe {
+			width: 100%;
+		}
 	</style>
 
 	<header id="header" role="banner">
 		<section class="row justify-content-center align-items-center text-center">
 
 			<div class="text-center p-5 header-bg">
-				<a href="<?php echo home_url();?>">
-					<img src="<?php echo get_stylesheet_directory_uri().'/assets/images';?>/icone_header.png" alt="logo-techome" srcset="">
+				<a href="<?php echo home_url(); ?>">
+					<img src="<?php echo get_stylesheet_directory_uri() . '/assets/images'; ?>/icone_header.png" alt="logo-techome" srcset="">
 				</a>
-				
+
 			</div>
 
 			<div class="text-center p-3">
@@ -232,14 +243,62 @@
 
 	<?php if (!is_home()): ?>
 
-		<section class="mt-5">
+		<section class="mt-5 mb-5">
 			<div class="container">
 				<div class="row flex-wrap">
-					<?php foreach ($posts as $post): ?>
-						<div class="col-md-2">
-							<button class="btn tipo-casa w-100" onclick="window.location.href='<?= $post->guid; ?>';"><?= $post->post_title; ?></button>
-						</div>
-					<?php endforeach; ?>
+					<?php
+					// Função para obter o penúltimo parâmetro da URL
+					function get_penultimate_url_parameter()
+					{
+						// Obtém a URL atual
+						$current_url = $_SERVER['REQUEST_URI'];
+
+						// Divide a URL em partes usando '/' como delimitador
+						$url_parts = array_filter(explode('/', $current_url));
+						// print_r($url_parts);
+
+						return $url_parts[2];
+					}
+
+					// Recupera o penúltimo parâmetro da URL
+					$post_type = get_penultimate_url_parameter();
+
+
+					// Verifica se um post type válido foi encontrado
+					if ($post_type) {
+						// Configura a query personalizada
+						$args = array(
+							'post_type'      => $post_type,
+							'posts_per_page' => -1, // Pega todos os posts
+						);
+
+						// Executa a query
+						$query = new WP_Query($args);
+
+						// Verifica se há posts
+						if ($query->have_posts()) {
+							echo '<div class="row">';
+
+							// Loop pelos posts
+							while ($query->have_posts()) {
+								$query->the_post();
+					?>
+
+								<div class="col-md-2">
+									<button class="btn tipo-casa w-100" onclick="window.location.href='<?= get_permalink(); ?>';"><?= get_the_title(); ?></button>
+								</div>
+
+					<?php
+							}
+
+							echo '</div>';
+
+							// Restaura os dados originais do post
+							wp_reset_postdata();
+						}
+					}
+					?>
+
 				</div>
 			</div>
 		</section>
