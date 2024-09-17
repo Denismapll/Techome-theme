@@ -214,7 +214,7 @@
 	</style>
 
 
-	<?php if (is_singular('c4')): ?>
+	<?php for($i=0 ; $i < 18 ; $i++) if(is_singular('c'.$i) || is_singular('s'.$i)): ?>
 
 		<section>
 			<div class="container">

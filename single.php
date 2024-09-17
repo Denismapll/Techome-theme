@@ -130,7 +130,7 @@ get_header(); ?>
 					<div class="col-md-8 col-12">
 
 						<div class="planta1">
-							<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/C12A_Planta1.png" alt="" srcset="">
+							<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.png" alt="" srcset="">
 						</div>
 
 						<div class="planta2">
@@ -142,10 +142,10 @@ get_header(); ?>
 								</div>
 								<div class="carousel-inner">
 									<div class="carousel-item active">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/planta1v2.png" class="d-block w-100" alt="http://localhost/Techome/wp-content/uploads/2024/09/planta1v2.pngs">
+										<img src="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.png" class="d-block w-100" alt="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.pngs">
 									</div>
 									<div class="carousel-item">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/planta1v2.png" class="d-block w-100" alt="http://localhost/Techome/wp-content/uploads/2024/09/planta1v2.pngs">
+										<img src="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.png" class="d-block w-100" alt="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.pngs">
 									</div>
 
 								</div>
@@ -180,49 +180,49 @@ get_header(); ?>
 								<h4><b>Nesta planta</b></h4>
 								<?php if ($data_page['checkbox_suite'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/camas.png" alt="" srcset="">
+										<img src="<?= $icons;?>/camas.png" alt="" srcset="">
 										<span><?= $data_page['suites_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_banheiro'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/banheiro.png" alt="" srcset="">
+										<img src="<?= $icons;?>/banheiro.png" alt="" srcset="">
 										<span>Banheiro social</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_lavabo'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/lavabo.png" alt="" srcset="">
+										<img src="<?= $icons;?>/lavabo.png" alt="" srcset="">
 										<span>Lavabo</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_sala'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/sala_estar.png" alt="" srcset="">
+										<img src="<?= $icons;?>/sala_estar.png" alt="" srcset="">
 										<span>Sala de estar</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_jantar'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/sala_jantar.png" alt="" srcset="">
+										<img src="<?= $icons;?>/sala_jantar.png" alt="" srcset="">
 										<span>Sala de Jantar</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_cozinha_integrada'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/cozinha.png" alt="" srcset="">
+										<img src="<?= $icons;?>/cozinha.png" alt="" srcset="">
 										<span>Cozinha integrada</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_lavanderia'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/lavanderia.png" alt="" srcset="">
+										<img src="<?= $icons;?>/lavanderia.png" alt="" srcset="">
 										<span>Lavanderia</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_vaga'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/vaga_coberta.png" alt="" srcset="">
+										<img src="<?= $icons;?>/vaga_coberta.png" alt="" srcset="">
 										<span>Vaga coberta</span>
 									</div>
 								<?php endif; ?>
