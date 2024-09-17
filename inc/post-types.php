@@ -25,7 +25,7 @@ function create_custom_post_types()
       'public' => true,
       'has_archive' => true,
       'menu_icon' => 'dashicons-admin-home',
-      'supports' => ['title'],
+      'supports' => ['title', 'revisions', 'thumbnail'],
       'rewrite' => ['slug' => $slug],
       'show_in_menu' => 'edit.php?post_type=c_s_group', // Menu pai para agrupar os post types
 
@@ -56,6 +56,8 @@ add_action('admin_menu', 'add_custom_menu_page');
 // Adicionando Plantas e Fachadas
 function add_custom_meta_boxes()
 {
+  global $post;
+
   $post_types = ['C4', 'C5', 'C6', 'C7', 'C8', 'C12', 'S8', 'S9', 'S10', 'S12', 'S15', 'S18'];
 
   foreach ($post_types as $post_type) {
@@ -170,6 +172,49 @@ function add_custom_meta_boxes()
     );
   }
 
+  // CRIAÇÃO DE VIDEOS 
+
+  foreach ($post_types as $post_type) {
+    $meta_box = new Odin_Metabox(
+      'videos', // ID único
+      'Videos', // Título da metabox
+      $post_type, // Custom post type ao qual a metabox será adicionada
+      'normal', // Contexto (normal, side, etc.)
+      'high' // Prioridade
+    );
+
+    $meta_box->set_fields(
+      array(
+        array(
+          'id'   => 'videos', // Required
+          'label' => __('Aba Videos', 'odin'), // Required
+          'type' => 'title', // Required
+        ),
+        array(
+          'id'          => 'video_1', // Obrigatório
+          'label'       => __('URL Video 1', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Colocar a URL do video do Youtube')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
+        array(
+          'id'          => 'video_2', // Obrigatório
+          'label'       => __('URL Video 2', 'odin'), // Obrigatório
+          'type'        => 'text', // Obrigatório
+          'attributes'  => array( // Opcional (atributos para input HTML/HTML5)
+            'placeholder' => __('Colocar a URL do video do Youtube')
+          ),
+          // 'description' => __('Exemplo: 153m2 a 158m2', 'odin'), // Opcional
+        ),
+
+      )
+    );
+  }
+
+  // CRIAÇÃO DE SIDEBAR PLANTAS E FACHADAS
+
   foreach ($post_types as $post_type) {
     $meta_box = new Odin_Metabox(
       'plantas_e_fachadas_side', // ID único
@@ -267,76 +312,5 @@ function add_custom_meta_boxes()
       )
     );
   }
-
 }
-add_action('init', 'add_custom_meta_boxes');
-
-
-
-
-// Função para criar a metabox de galeria
-function add_gallery_meta_box() {
-  $post_types = ['C4', 'C5', 'C6', 'C7', 'C8', 'C12', 'S8', 'S9', 'S10', 'S12', 'S15', 'S18'];
-  foreach ($post_types as $post_type) {
-      add_meta_box(
-          'gallery_meta_box', // ID da metabox
-          'Galeria de Imagens', // Título
-          'render_gallery_meta_box', // Função de renderização
-          $post_type, // Tipos de post
-          'normal', // Contexto
-          'high' // Prioridade
-      );
-  }
-}
-add_action('add_meta_boxes', 'add_gallery_meta_box');
-
-// Função para renderizar o conteúdo da metabox
-function render_gallery_meta_box($post) {
-  // Campo nonce para segurança
-  wp_nonce_field('save_gallery_meta_box', 'gallery_meta_box_nonce');
-
-  // Recupera as imagens salvas
-  $gallery_images = get_post_meta($post->ID, '_gallery_images', true);
-  ?>
-
-  <div id="gallery_container">
-      <button id="add_image_button" class="button">Adicionar Imagem</button>
-      <ul id="gallery_images_list">
-          <?php
-          if (!empty($gallery_images)) {
-              foreach ($gallery_images as $image_id) {
-                  // Recupera o URL da miniatura usando wp_get_attachment_image_url()
-                  $image_url = wp_get_attachment_image_url($image_id, 'thumbnail');
-                  echo '<li><input type="hidden" name="gallery_images[]" value="' . esc_attr($image_id) . '" />';
-                  echo '<img src="' . esc_url($image_url) . '" style="max-width: 100px; margin: 5px;" />';
-                  echo '<button class="remove_image_button button">Remover</button></li>';
-              }
-          }
-          ?>
-      </ul>
-  </div>
-
-  <?php
-}
-
-// Função para salvar as imagens da galeria
-function save_gallery_meta_box_data($post_id) {
-  // Verifica o nonce
-  if (!isset($_POST['gallery_meta_box_nonce']) || !wp_verify_nonce($_POST['gallery_meta_box_nonce'], 'save_gallery_meta_box')) {
-      return;
-  }
-
-  // Verifica a permissão de edição
-  if (!current_user_can('edit_post', $post_id)) {
-      return;
-  }
-
-  // Salva as imagens da galeria
-  if (isset($_POST['gallery_images'])) {
-      $image_ids = array_map('sanitize_text_field', $_POST['gallery_images']);
-      update_post_meta($post_id, '_gallery_images', $image_ids);
-  } else {
-      delete_post_meta($post_id, '_gallery_images');
-  }
-}
-add_action('save_post', 'save_gallery_meta_box_data');
+add_action('init', 'add_custom_meta_boxes', 1);

@@ -383,3 +383,8 @@ function redirect_to_first_child_post() {
 add_action('template_redirect', 'redirect_to_first_child_post');
 
 $icons = get_stylesheet_directory_uri().'/assets/images';
+
+function custom_enqueue_media() {
+	wp_enqueue_media();
+}
+add_action('admin_enqueue_scripts', 'custom_enqueue_media');

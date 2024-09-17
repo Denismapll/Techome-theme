@@ -14,6 +14,9 @@ get_header(); ?>
 	<?php
 	$data_page = get_post_meta(get_the_ID());
 	$show_page = isset($_GET['pg']) ? $_GET : ['pg' => 'plantas'];
+	$upload = wp_upload_dir();
+
+	$infos_page = get_fields();
 	?>
 
 	<style>
@@ -118,7 +121,7 @@ get_header(); ?>
 					<div class="title mr-4">
 						<h1>Conheça a <?= the_title(); ?></h1>
 					</div>
-					<span class="metros"><?php isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : '' ;?></span>
+					<span class="metros"><?php isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : ''; ?></span>
 				</div>
 			</div>
 		</section>
@@ -130,35 +133,63 @@ get_header(); ?>
 					<div class="col-md-8 col-12">
 
 						<div class="planta1">
-							<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.png" alt="" srcset="">
+							<?php
+							// Obtém a URL da imagem destacada
+							$thumbnail_url = get_the_post_thumbnail_url();
+
+							// Define a URL da imagem padrão
+							$default_image = $icons . '/vazio.png';
+							?>
+							<img class="w-100" src="<?php echo !empty($thumbnail_url) ? $thumbnail_url : $default_image; ?>" alt="" srcset="">
 						</div>
+
 
 						<div class="planta2">
 							<h5>Fachadas</h5>
-							<div id="carouselExampleIndicators" class="carousel slide w-100">
+							<div id="caroussel-plantas" class="carousel slide w-100">
 								<div class="carousel-indicators">
-									<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-									<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+									<?php if (isset($infos_page['carossel']) && count($infos_page['carossel']) > 0): ?>
+										<?php for ($i = 0; $i < count($infos_page['carossel']); $i++): ?>
+											<button type="button" data-bs-target="#caroussel-plantas" data-bs-slide-to="<?= $i; ?>" class="<?= $i == 0 ? 'active' : ''; ?>" aria-current="<?= $i == 0 ? 'true' : 'false'; ?>" aria-label="Slide <?= $i; ?>"></button>
+										<?php endfor; ?>
+									<?php else: ?>
+										<!-- Exibe um único botão ativo se o carrossel estiver vazio -->
+										<button type="button" data-bs-target="#caroussel-plantas" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+									<?php endif; ?>
 								</div>
-								<div class="carousel-inner">
-									<div class="carousel-item active">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.png" class="d-block w-100" alt="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.pngs">
-									</div>
-									<div class="carousel-item">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.png" class="d-block w-100" alt="http://localhost/Techome/wp-content/uploads/2024/09/C12.A_Espaço-Gourmet.pngs">
-									</div>
 
+								<div class="carousel-inner">
+									<?php if (isset($infos_page['carossel']) && count($infos_page['carossel']) > 0): ?>
+										<?php for ($i = 0; $i < count($infos_page['carossel']); $i++): ?>
+											<?php
+											// Verifica se a imagem está vazia, se estiver define a imagem padrão
+											$image = !empty($infos_page['carossel']['Imagem_' . $i]) ? $infos_page['carossel']['Imagem_' . $i] : $icons . '/vazio.png';
+											?>
+											<div class="carousel-item <?= $i == 0 ? 'active' : ''; ?>">
+												<img src="<?php echo $image; ?>" class="d-block w-100" alt="Imagem <?= $i; ?>">
+											</div>
+										<?php endfor; ?>
+									<?php else: ?>
+										<!-- Exibe uma imagem padrão quando não há itens no carrossel -->
+										<div class="carousel-item active">
+											<img src="<?= $icons; ?>/vazio.png" class="d-block w-100" alt="Imagem padrão">
+										</div>
+									<?php endif; ?>
 								</div>
-								<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+
+								<button class="carousel-control-prev" type="button" data-bs-target="#caroussel-plantas" data-bs-slide="prev">
 									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 									<span class="visually-hidden">Previous</span>
 								</button>
-								<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+								<button class="carousel-control-next" type="button" data-bs-target="#caroussel-plantas" data-bs-slide="next">
 									<span class="carousel-control-next-icon" aria-hidden="true"></span>
 									<span class="visually-hidden">Next</span>
 								</button>
 							</div>
 						</div>
+
+
+
 
 					</div>
 
@@ -180,49 +211,49 @@ get_header(); ?>
 								<h4><b>Nesta planta</b></h4>
 								<?php if ($data_page['checkbox_suite'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/camas.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/camas.png" alt="" srcset="">
 										<span><?= $data_page['suites_casa'][0] ?></span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_banheiro'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/banheiro.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/banheiro.png" alt="" srcset="">
 										<span>Banheiro social</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_lavabo'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/lavabo.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/lavabo.png" alt="" srcset="">
 										<span>Lavabo</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_sala'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/sala_estar.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/sala_estar.png" alt="" srcset="">
 										<span>Sala de estar</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_jantar'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/sala_jantar.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/sala_jantar.png" alt="" srcset="">
 										<span>Sala de Jantar</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_cozinha_integrada'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/cozinha.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/cozinha.png" alt="" srcset="">
 										<span>Cozinha integrada</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_lavanderia'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/lavanderia.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/lavanderia.png" alt="" srcset="">
 										<span>Lavanderia</span>
 									</div>
 								<?php endif; ?>
 								<?php if ($data_page['checkbox_vaga'][0] === 'yes'): ?>
 									<div class="plantas">
-										<img src="<?= $icons;?>/vaga_coberta.png" alt="" srcset="">
+										<img src="<?= $icons; ?>/vaga_coberta.png" alt="" srcset="">
 										<span>Vaga coberta</span>
 									</div>
 								<?php endif; ?>
@@ -274,26 +305,29 @@ get_header(); ?>
 
 				</div>
 				<div class="row mt-5">
-					<div class="col-md-6 col-12">
-						<a href="http://localhost/Techome/wp-content/uploads/2024/09/1.png" data-toggle="lightbox">
-							<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/1.png">
-						</a>
-					</div>
-					<div class="col-md-6 col-12">
-						<a href="http://localhost/Techome/wp-content/uploads/2024/09/2.png" data-toggle="lightbox">
-							<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/2.png">
-						</a>
-					</div>
-					<div class="col-md-6 col-12">
-						<a href="http://localhost/Techome/wp-content/uploads/2024/09/3.png" data-toggle="lightbox">
-							<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/3.png">
-						</a>
-					</div>
-					<div class="col-md-6 col-12">
-						<a href="http://localhost/Techome/wp-content/uploads/2024/09/4.png" data-toggle="lightbox">
-							<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/4.png">
-						</a>
-					</div>
+
+					<!-- <?php print_r(($infos_page['img_baixo'])); ?> -->
+
+					<?php if (isset($infos_page['img_baixo'])): for ($i = 0; $i < count($infos_page['img_baixo']); $i++): if (!empty($infos_page['img_baixo']['Imagem_' . $i])): ?>
+
+								<div class="col-md-6 col-12">
+									<a href="<?= $infos_page['img_baixo']['Imagem_' . $i]['url'] ?>" data-toggle="lightbox">
+										<img class="w-100" src="<?= $infos_page['img_baixo']['Imagem_' . $i]['url'] ?>">
+									</a>
+								</div>
+
+						<?php endif;
+						endfor;
+					else: ?>
+
+						<div class="col-md-6 col-12 mt-4">
+							<a href="<?= $icons; ?>/vazio.png" data-toggle="lightbox">
+								<img class="w-100" src="<?= $icons; ?>/vazio.png">
+							</a>
+						</div>
+
+					<?php endif; ?>
+
 				</div>
 			</div>
 		</section>
@@ -309,10 +343,10 @@ get_header(); ?>
 				<div class="d-flex align-items-center justify-content-between">
 					<div class="title mr-4 d-flex gap-3 align-items-center">
 						<h1>Conheça a <?= the_title(); ?></h1>
-						<span class="metros"><?php isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : '' ;?></span>
+						<span class="metros"><?php isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : ''; ?></span>
 					</div>
 					<div>
-						<p>Disponibilidade da casa de acordo com o lote <b><?= isset($data_page['lote_minimo'][0]) ? $data_page['lote_minimo'][0]: '';?></b></p>
+						<p>Disponibilidade da casa de acordo com o lote <b><?= isset($data_page['lote_minimo'][0]) ? $data_page['lote_minimo'][0] : ''; ?></b></p>
 					</div>
 				</div>
 				<h6>A partir de R$<?= isset($data_page['valor_casa'][0]) ? $data_page['valor_casa'][0] : ''; ?></h6>
@@ -442,7 +476,7 @@ get_header(); ?>
 								<div class="title mr-4">
 									<h4>Conheça a <?= the_title(); ?></h4>
 								</div>
-								<span class="metros"><?php  isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : '';?></span>
+								<span class="metros"><?php isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : ''; ?></span>
 							</div>
 							<h6>A partir de R$<?= isset($data_page['valor_casa'][0]) ? $data_page['valor_casa'][0] : ''; ?></h6>
 							<div class="side-right1">
