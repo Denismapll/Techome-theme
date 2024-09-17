@@ -336,7 +336,19 @@ get_header(); ?>
 
 	<!-- SECÇÃO PRINCIPAL - ACABAMENTO E DETALHES -->
 
-	<?php if ($show_page['pg'] == "acabamento"): ?>
+	<!-- <?php print_r($_GET);?> -->
+
+	<?php if (strpos($show_page['pg'], "acabamento") !== false): ?>
+
+		<?php 
+		// print_r(count($infos_page['infos']));
+
+		$chaves = array_keys($infos_page['infos']);
+
+		// print_r($chaves);
+		
+		?>
+		<?php print_r(($infos_page['infos']));?>
 
 		<section>
 			<div class="container">
@@ -357,6 +369,7 @@ get_header(); ?>
 		<section>
 			<div class="container">
 				<div class="row">
+					<!-- MENU LATERAL ESQUERDO -->
 					<div class="col-md-4 col-12 mt-4">
 						<div class="bg-cinza shadow-right h-100 w-100">
 
@@ -364,29 +377,29 @@ get_header(); ?>
 							<div class="lateral">
 								<h3 class="light-green">ACABAMENTOS</h3>
 								<ul class="m-0 p-0 acabamentos-opcoes" style="margin-top: 30px !important">
-									<li class="selected-list"><a href="#">Pisos</a></li>
-									<li><a href="#">Paredes</a></li>
-									<li><a href="#">Metais & Granitos</a></li>
-									<li><a href="#">Acabamento externo</a></li>
-									<li><a href="#">Louças</a></li>
-									<li><a href="#">Portas e esquadrias</a></li>
+									<li class="selected-list"><a href="./?pg=acabamento&int=pisos">Pisos</a></li>
+									<li><a href="./?pg=acabamento&int=paredes">Paredes</a></li>
+									<li><a href="./?pg=acabamento&int=metais">Metais & Granitos</a></li>
+									<li><a href="./?pg=acabamento&int=externo">Acabamento externo</a></li>
+									<li><a href="./?pg=acabamento&int=loucas">Louças</a></li>
+									<li><a href="./?pg=acabamento&int=portas">Portas e esquadrias</a></li>
 								</ul>
 							</div>
 
 							<div class="lateral">
 								<h3 class="light-green">DIFERENCIAIS DA ENTREGA TECHOME</h3>
 								<ul class="m-0 p-0 acabamentos-opcoes" style="margin-top: 30px !important">
-									<li><a href="#">Infraestrutura seca</a></li>
-									<li><a href="#">Espera de energia fotovoltaica</a></li>
-									<li><a href="#">Instalação de encanamento a gás para cozinha e banheiros</a></li>
-									<li><a href="#">Pressurizador na rede de água quente</a></li>
-									<li><a href="#">Chuveiros</a></li>
-									<li><a href="#">Ponto elétrico para chuveiros</a></li>
-									<li><a href="#">Ponto preparado para instalação de ar condicionado na sala, quartos e suíte</a></li>
-									<li><a href="#">Preparação para carro elétrico</a></li>
-									<li><a href="#">Guarda corpos de vidro nas escadas**</a></li>
-									<li><a href="#">Pé direito de 2,80M**</a></li>
-									<li><a href="#">Escada com revestimento em granito**</a></li>
+									<li><a href="./?pg=acabamento&int=infraestrutura">Infraestrutura seca</a></li>
+									<li><a href="./?pg=acabamento&int=energia">Espera de energia fotovoltaica</a></li>
+									<li><a href="./?pg=acabamento&int=encanamento">Instalação de encanamento a gás para cozinha e banheiros</a></li>
+									<li><a href="./?pg=acabamento&int=pressurizador">Pressurizador na rede de água quente</a></li>
+									<li><a href="./?pg=acabamento&int=chuveiros">Chuveiros</a></li>
+									<li><a href="./?pg=acabamento&int=eletrica">Ponto elétrico para chuveiros</a></li>
+									<li><a href="./?pg=acabamento&int=arcondicionado">Ponto preparado para instalação de ar condicionado na sala, quartos e suíte</a></li>
+									<li><a href="./?pg=acabamento&int=carroeletrico">Preparação para carro elétrico</a></li>
+									<li><a href="./?pg=acabamento&int=guardacopos">Guarda corpos de vidro nas escadas**</a></li>
+									<li><a href="./?pg=acabamento&int=pedireito">Pé direito de 2,80M**</a></li>
+									<li><a href="./?pg=acabamento&int=escada">Escada com revestimento em granito**</a></li>
 								</ul>
 							</div>
 
@@ -398,29 +411,26 @@ get_header(); ?>
 
 						<div class="row p-3">
 							<div class="col-md-6 col-12 mt-4">
-								<h3 class="fw-bold">Pisos</h3>
-								<p>As casas Techome tem como padrão de entrega o piso cerâmico
-									nas áreas molhadas (banheiros e cozinha) e contrapiso nas
-									áreas secas - com opções de acabamento adicional em
-									laminado ou cerâmica.</p>
+							<?php print_r($infos_page['infos']['pisos']['tts']);?>
+
 							</div>
 							<div class="col-md-6 col-12 mt-4"></div>
 							<div class="col-md-6 col-12 mt-4">
 								<h5><b>Banheiros |</b> Porcelanato 60 x 60cm.</h5>
 								<div class="d-flex justify-content-center align-items-center">
-									<img src="http://localhost/Techome/wp-content/uploads/2024/09/exemplo-pisos.png" alt="" srcset="">
+									<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/ex-1.png" alt="" srcset="">
 								</div>
 							</div>
 							<div class="col-md-6 col-12 mt-4">
 								<h5><b>Áreas molhadas |</b> Porcelanato 60 x 60cm e rodapé em EPS com h = 12cm.</h5>
 								<div class="d-flex justify-content-center align-items-center">
-									<img src="http://localhost/Techome/wp-content/uploads/2024/09/exemplo-molhado.png" alt="" srcset="">
+									<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/ex-1.png" alt="" srcset="">
 								</div>
 							</div>
 							<div class="col-md-6 col-12 mt-4">
 								<h5><b>Áreas secas |</b> Piso laminado e rodapé em EPS com h = 12cm.</h5>
 								<div class="d-flex justify-content-center align-items-center">
-									<img src="http://localhost/Techome/wp-content/uploads/2024/09/exemplo-secos.png" alt="" srcset="">
+									<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/ex-1.png" alt="" srcset="">
 								</div>
 							</div>
 						</div>
