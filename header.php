@@ -26,8 +26,6 @@
 
 <script>
 	window.onload = () => {
-		const menu = document.querySelectorAll('.menu-interno');
-
 		var currentUrl = window.location.href;
 
 		var urlParts = currentUrl.split('/');
@@ -39,28 +37,62 @@
 		}
 
 		// console.log(urlParts);
+		const postType = document.querySelectorAll('.col-md-1 a');
+		const tipoCasa = document.querySelectorAll('.tipo-casa');
+		const menu = document.querySelectorAll('.menu-interno');
+		const opcoes = document.querySelectorAll('.acabamentos-opcoes li');
+		let encontrou = false; // Flag para verificar se algum item foi encontrado
 
-		switch (lastSection) {
-			case '?pg=plantas':
-				menu[0].classList.add('escolhido');
-				break;
-			case '?pg=acabamento':
-				menu[1].classList.add('escolhido');
 
-				break;
-			case '?pg=videos':
-				menu[2].classList.add('escolhido');
-				break;
 
-			default:
-				menu[0].classList.add('escolhido');
-				break;
-		}
 
-		opcoes = document.querySelectorAll('.acabamentos-opcoes li')
+		urlParts.forEach((parts) => {
 
-		if (opcoes) {
+			// // MARCA VERDE A SELEÇÃO DO POST TYPE (C4, C5, C6...)
+
+			postType.forEach((post) => {
+				buscar = post.innerText.replaceAll('.', '');
+
+				if (parts === buscar) {
+					// console.log(post)
+					post.classList.add('selected-post-type')
+				}
+
+			});
+
+
+			// // MARCA VERDE A SELEÇÃO DA DAS CASAS INTERNAS
+
+			tipoCasa.forEach((tipo) => {
+				buscar = tipo.innerText.replaceAll('.', '-').replaceAll('+', '').toLowerCase();
+				// console.log(buscar);
+				console.log(parts)
+				if (parts === buscar) {
+					tipo.classList.add('selected-house')
+				}
+			});
+
+
+			// MARCA VERDE A OPCAO PLANTAS, ACABAMENTO OU VIDEO
+
+			// Se já encontrou uma correspondência, não precisa continuar
+			if (encontrou) return;
+
+			// Percorre o menu para verificar se algum item corresponde à URL
+			menu.forEach((opcao) => {
+				const buscar = opcao.value;
+
+				// Se encontrar uma correspondência, adiciona a classe e marca como encontrado
+				if (parts.includes(buscar)) {
+					opcao.classList.add('escolhido');
+					encontrou = true; // Marca como encontrado e interrompe futuras verificações
+				}
+			});
+
+
 			opcoes.forEach((li) => {
+				buscar = li.children[0].href;
+
 				if (lastSection === '?pg=acabamento') {
 
 				} else {
@@ -69,6 +101,14 @@
 					}
 				}
 			})
+
+
+
+		})
+
+		// Se nenhum item foi encontrado após todas as iterações, marca o primeiro item do menu
+		if (!encontrou && menu.length > 0) {
+			menu[0].classList.add('escolhido');
 		}
 
 	};
@@ -101,6 +141,14 @@
 
 		.shadow {
 			text-shadow: 2px 2px 5px;
+		}
+
+		.selected-house {
+			background-color: #8BC751 !important;
+		}
+
+		.selected-post-type {
+			background-color: #d3d3d3 !important;
 		}
 
 		.homes div a {
@@ -235,17 +283,17 @@
 				<div class="row">
 					<div class="col-md-4 col-12">
 						<div class="p-2 mt-4 text-center bottom-header">
-							<button id="plantas" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href='?pg=plantas'">Plantas e Fachadas</button>
+							<button id="plantas" class="btn-bottom btn w-100 menu-interno" value="?pg=plantas" onclick="window.location.href='?pg=plantas'">Plantas e Fachadas</button>
 						</div>
 					</div>
 					<div class="col-md-4 col-12">
 						<div class="p-2 mt-4 text-center bottom-header">
-							<button id="acabamento" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
+							<button id="acabamento" class="btn-bottom btn w-100 menu-interno" value="?pg=acabamento" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
 						</div>
 					</div>
 					<div class="col-md-4 col-12">
 						<div class="p-2 mt-4 text-center bottom-header">
-							<button id="videos" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=videos')">Videos</button>
+							<button id="videos" class="btn-bottom btn w-100 menu-interno" value="?pg=videos" onclick="window.location.href=('?pg=videos')">Videos</button>
 						</div>
 					</div>
 				</div>
@@ -284,6 +332,7 @@
 						$args = array(
 							'post_type'      => $post_type,
 							'posts_per_page' => -1, // Pega todos os posts
+							'order' => 'asc',
 						);
 
 						// Executa a query

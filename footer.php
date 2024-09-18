@@ -43,35 +43,35 @@
 					<?php if ($show_page['pg'] == "plantas"): ?>
 						<div class="col-md-4 col-12">
 							<div class="p-2 mt-4 text-center bottom-header">
-								<button id="acabamento" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
+								<button id="acabamento" class="btn-bottom btn w-100 menu-interno-footer" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
 							</div>
 						</div>
 						<div class="col-md-4 col-12">
 							<div class="p-2 mt-4 text-center bottom-header">
-								<button id="videos" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=videos')">Videos</button>
+								<button id="videos" class="btn-bottom btn w-100 menu-interno-footer" onclick="window.location.href=('?pg=videos')">Videos</button>
 							</div>
 						</div>
 					<?php elseif ($show_page['pg'] == "acabamento"): ?>
 						<div class="col-md-4 col-12">
 							<div class="p-2 mt-4 text-center bottom-header">
-								<button id="plantas" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href='?pg=plantas'">Plantas e Fachadas</button>
+								<button id="plantas" class="btn-bottom btn w-100 menu-interno-footer" onclick="window.location.href='?pg=plantas'">Plantas e Fachadas</button>
 							</div>
 						</div>
 						<div class="col-md-4 col-12">
 							<div class="p-2 mt-4 text-center bottom-header">
-								<button id="videos" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=videos')">Videos</button>
+								<button id="videos" class="btn-bottom btn w-100 menu-interno-footer" onclick="window.location.href=('?pg=videos')">Videos</button>
 							</div>
 						</div>
 					<?php elseif ($show_page['pg'] == "videos"): ?>
 
 						<div class="col-md-4 col-12">
 							<div class="p-2 mt-4 text-center bottom-header">
-								<button id="plantas" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href='?pg=plantas'">Plantas e Fachadas</button>
+								<button id="plantas" class="btn-bottom btn w-100 menu-interno-footer" onclick="window.location.href='?pg=plantas'">Plantas e Fachadas</button>
 							</div>
 						</div>
 						<div class="col-md-4 col-12">
 							<div class="p-2 mt-4 text-center bottom-header">
-								<button id="acabamento" class="btn-bottom btn w-100 menu-interno" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
+								<button id="acabamento" class="btn-bottom btn w-100 menu-interno-footer" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
 							</div>
 						</div>
 
