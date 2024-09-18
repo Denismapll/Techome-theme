@@ -57,6 +57,20 @@
 				break;
 		}
 
+		opcoes = document.querySelectorAll('.acabamentos-opcoes li')
+
+		if (opcoes) {
+			opcoes.forEach((li) => {
+				if (lastSection === '?pg=acabamento') {
+
+				} else {
+					if (li.children[0].href.includes(lastSection)) {
+						li.classList.add('selected-list')
+					}
+				}
+			})
+		}
+
 	};
 
 	function resize(video) {
@@ -214,7 +228,7 @@
 	</style>
 
 
-	<?php for($i=0 ; $i < 18 ; $i++) if(is_singular('c'.$i) || is_singular('s'.$i)): ?>
+	<?php for ($i = 0; $i < 18; $i++) if (is_singular('c' . $i) || is_singular('s' . $i)): ?>
 
 		<section>
 			<div class="container">
@@ -248,7 +262,7 @@
 				<div class="row flex-wrap">
 					<?php
 					// Função para obter o penúltimo parâmetro da URL
-					function get_penultimate_url_parameter()
+					function get_penultimate_url_parameter($value)
 					{
 						// Obtém a URL atual
 						$current_url = $_SERVER['REQUEST_URI'];
@@ -257,11 +271,11 @@
 						$url_parts = array_filter(explode('/', $current_url));
 						// print_r($url_parts);
 
-						return $url_parts[2];
+						return $url_parts[$value];
 					}
 
 					// Recupera o penúltimo parâmetro da URL
-					$post_type = get_penultimate_url_parameter();
+					$post_type = get_penultimate_url_parameter(2);
 
 
 					// Verifica se um post type válido foi encontrado

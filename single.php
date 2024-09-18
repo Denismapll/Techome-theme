@@ -15,8 +15,10 @@ get_header(); ?>
 	$data_page = get_post_meta(get_the_ID());
 	$show_page = isset($_GET['pg']) ? $_GET : ['pg' => 'plantas'];
 	$upload = wp_upload_dir();
-
 	$infos_page = get_fields();
+	$chaves = isset($infos_page['infos']) ? array_keys($infos_page['infos']) : [];
+
+
 	?>
 
 	<style>
@@ -111,9 +113,10 @@ get_header(); ?>
 	</style>
 
 
-	<!-- SECÇÃO PRINCIPAL - PLANTAS E FACHADAS -->
-
+	<!-- CASO 1 - PLANTAS E FACHADAS - START -->
 	<?php if ($show_page['pg'] == "plantas"): ?>
+
+		<!-- SECÇÃO PRINCIPAL - PLANTAS E FACHADAS - START -->
 
 		<section>
 			<div class="container">
@@ -126,10 +129,11 @@ get_header(); ?>
 			</div>
 		</section>
 
-		<!-- SECÇÃO PRINCIPAL - PLANTAS E FACHADAS -->
 		<section>
 			<div class="container">
 				<div class="row">
+
+					<!-- AREA PRINCIPAL - START -->
 					<div class="col-md-8 col-12">
 
 						<div class="planta1">
@@ -192,118 +196,18 @@ get_header(); ?>
 
 
 					</div>
+					<!-- AREA PRINCIPAL - END -->
 
+
+					<!-- SIDE BAR DIREITA - START -->
 					<div class="col-md-4 col-12">
-						<div class="bg-cinza h-100 w-100">
-							<div class="d-flex align-items-center">
-								<div class="title mr-4">
-									<h4>Conheça a <?= the_title(); ?></h4>
-								</div>
-								<span class="metros"><?php isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : ''; ?></span>
-							</div>
-							<h6>A partir de R$<?= isset($data_page['valor_casa'][0]) ? $data_page['valor_casa'][0] : ''; ?></h6>
-							<div class="side-right1">
-								<h6>Disponibilidade da casa de acordo com o lote</h6>
-								<b><?= isset($data_page['lote_minimo'][0]) ? $data_page['lote_minimo'][0] : ''; ?></b>
-							</div>
-
-							<div class="side-right1">
-								<h4><b>Nesta planta</b></h4>
-								<?php if ($data_page['checkbox_suite'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/camas.png" alt="" srcset="">
-										<span><?= $data_page['suites_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_banheiro'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/banheiro.png" alt="" srcset="">
-										<span>Banheiro social</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_lavabo'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/lavabo.png" alt="" srcset="">
-										<span>Lavabo</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_sala'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/sala_estar.png" alt="" srcset="">
-										<span>Sala de estar</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_jantar'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/sala_jantar.png" alt="" srcset="">
-										<span>Sala de Jantar</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_cozinha_integrada'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/cozinha.png" alt="" srcset="">
-										<span>Cozinha integrada</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_lavanderia'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/lavanderia.png" alt="" srcset="">
-										<span>Lavanderia</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_vaga'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/vaga_coberta.png" alt="" srcset="">
-										<span>Vaga coberta</span>
-									</div>
-								<?php endif; ?>
-							</div>
-
-							<div class="side-right1 borda-bottom">
-								<h4 style="margin-top: 25px;"><b>Opcionais</b></h4>
-								<?php if (isset($data_page['muro_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/muro.png" alt="" srcset="">
-										<span><?= $data_page['muro_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['area_gourmet_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/gourmet.png" alt="" srcset="">
-										<span><?= $data_page['area_gourmet_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['quartos_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/camas.png" alt="" srcset="">
-										<span><?= $data_page['quartos_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['smart_kit_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/smart.png" alt="" srcset="">
-										<span><?= $data_page['smart_kit_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['cozinha_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/cozinha.png" alt="" srcset="">
-										<span><?= $data_page['cozinha_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['grama_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/grama.png" alt="" srcset="">
-										<span><?= $data_page['grama_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-							</div>
-
-
-						</div>
+						<?php include get_stylesheet_directory() . '/sidebars/side-right.php'; ?>
 					</div>
+					<!-- SIDE BAR DIREITA - END -->
 
 				</div>
+
+				<!-- IMAGENS PARTE DE BAIXO - START -->
 				<div class="row mt-5">
 
 					<!-- <?php print_r(($infos_page['img_baixo'])); ?> -->
@@ -329,27 +233,29 @@ get_header(); ?>
 					<?php endif; ?>
 
 				</div>
+				<!-- IMAGENS PARTE DE BAIXO - END -->
+
 			</div>
 		</section>
 
+		<!-- SECÇÃO PRINCIPAL - PLANTAS E FACHADAS - END -->
+
+
 	<?php endif; ?>
+	<!-- FIM DO CASO 1 - PLANTAS E FACHADAS - END -->
 
-	<!-- SECÇÃO PRINCIPAL - ACABAMENTO E DETALHES -->
 
-	<!-- <?php print_r($_GET);?> -->
-
+	<!-- CASO 2 - ACABAMENTO E DETALHES - START -->
 	<?php if (strpos($show_page['pg'], "acabamento") !== false): ?>
+		<?php
 
-		<?php 
-		// print_r(count($infos_page['infos']));
+		// DEBUG -- REMOVER 
+		echo '<pre>';
+		// print_r(($chaves));
+		// print_r(($infos_page['infos']));
+		echo '</pre>'; ?>
 
-		$chaves = array_keys($infos_page['infos']);
-
-		// print_r($chaves);
-		
-		?>
-		<?php print_r(($infos_page['infos']));?>
-
+		<!-- SECÇÃO PRINCIPAL - ACABAMENTO E DETALHES - START -->
 		<section>
 			<div class="container">
 				<div class="d-flex align-items-center justify-content-between">
@@ -369,70 +275,41 @@ get_header(); ?>
 		<section>
 			<div class="container">
 				<div class="row">
-					<!-- MENU LATERAL ESQUERDO -->
+
+					<!-- MENU LATERAL ESQUERDO - START-->
 					<div class="col-md-4 col-12 mt-4">
-						<div class="bg-cinza shadow-right h-100 w-100">
-
-
-							<div class="lateral">
-								<h3 class="light-green">ACABAMENTOS</h3>
-								<ul class="m-0 p-0 acabamentos-opcoes" style="margin-top: 30px !important">
-									<li class="selected-list"><a href="./?pg=acabamento&int=pisos">Pisos</a></li>
-									<li><a href="./?pg=acabamento&int=paredes">Paredes</a></li>
-									<li><a href="./?pg=acabamento&int=metais">Metais & Granitos</a></li>
-									<li><a href="./?pg=acabamento&int=externo">Acabamento externo</a></li>
-									<li><a href="./?pg=acabamento&int=loucas">Louças</a></li>
-									<li><a href="./?pg=acabamento&int=portas">Portas e esquadrias</a></li>
-								</ul>
-							</div>
-
-							<div class="lateral">
-								<h3 class="light-green">DIFERENCIAIS DA ENTREGA TECHOME</h3>
-								<ul class="m-0 p-0 acabamentos-opcoes" style="margin-top: 30px !important">
-									<li><a href="./?pg=acabamento&int=infraestrutura">Infraestrutura seca</a></li>
-									<li><a href="./?pg=acabamento&int=energia">Espera de energia fotovoltaica</a></li>
-									<li><a href="./?pg=acabamento&int=encanamento">Instalação de encanamento a gás para cozinha e banheiros</a></li>
-									<li><a href="./?pg=acabamento&int=pressurizador">Pressurizador na rede de água quente</a></li>
-									<li><a href="./?pg=acabamento&int=chuveiros">Chuveiros</a></li>
-									<li><a href="./?pg=acabamento&int=eletrica">Ponto elétrico para chuveiros</a></li>
-									<li><a href="./?pg=acabamento&int=arcondicionado">Ponto preparado para instalação de ar condicionado na sala, quartos e suíte</a></li>
-									<li><a href="./?pg=acabamento&int=carroeletrico">Preparação para carro elétrico</a></li>
-									<li><a href="./?pg=acabamento&int=guardacopos">Guarda corpos de vidro nas escadas**</a></li>
-									<li><a href="./?pg=acabamento&int=pedireito">Pé direito de 2,80M**</a></li>
-									<li><a href="./?pg=acabamento&int=escada">Escada com revestimento em granito**</a></li>
-								</ul>
-							</div>
-
-
-						</div>
+						<?php include get_stylesheet_directory() . '/sidebars/side-left.php'; ?>
 					</div>
+					<!-- MENU LATERAL ESQUERDO - END -->
 
+
+					<!-- AREA PRINCIPAL - START -->
 					<div class="col-md-8 col-12 mt-4">
 
 						<div class="row p-3">
-							<div class="col-md-6 col-12 mt-4">
-							<?php print_r($infos_page['infos']['pisos']['tts']);?>
+							<!-- CONTEUDO PAGINA -->
 
-							</div>
-							<div class="col-md-6 col-12 mt-4"></div>
-							<div class="col-md-6 col-12 mt-4">
-								<h5><b>Banheiros |</b> Porcelanato 60 x 60cm.</h5>
-								<div class="d-flex justify-content-center align-items-center">
-									<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/ex-1.png" alt="" srcset="">
-								</div>
-							</div>
-							<div class="col-md-6 col-12 mt-4">
-								<h5><b>Áreas molhadas |</b> Porcelanato 60 x 60cm e rodapé em EPS com h = 12cm.</h5>
-								<div class="d-flex justify-content-center align-items-center">
-									<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/ex-1.png" alt="" srcset="">
-								</div>
-							</div>
-							<div class="col-md-6 col-12 mt-4">
-								<h5><b>Áreas secas |</b> Piso laminado e rodapé em EPS com h = 12cm.</h5>
-								<div class="d-flex justify-content-center align-items-center">
-									<img class="w-100" src="http://localhost/Techome/wp-content/uploads/2024/09/ex-1.png" alt="" srcset="">
-								</div>
-							</div>
+							<?php
+
+							$interna = get_penultimate_url_parameter(4); // Obtém o penúltimo parâmetro da URL
+							// echo $interna . '<br>';
+
+
+							for ($i = 0; $i < count($chaves); $i++) {
+								$buscado = '?pg=acabamento&int=' . $chaves[$i];
+								// echo $buscado;
+								if (strpos($interna, $buscado) !== false) { // Verifica se a chave é encontrada no penúltimo parâmetro da URL
+									// echo "achou " . $chaves[$i]; // Exibe a chave encontrada
+									// include get_stylesheet_directory() . '/acabamentos-content/interno-acabamento.php';
+
+									switch ($chaves[$i]) {
+										default:
+											include get_stylesheet_directory() . '/acabamentos-content/interno-acabamento.php';
+									}
+								}
+							}
+
+							?>
 						</div>
 
 						<div class="p-4 mt-4">
@@ -440,14 +317,21 @@ get_header(); ?>
 						</div>
 
 					</div>
+					<!-- AREA PRINCIPAL - END -->
+
 				</div>
 		</section>
 
+		<!-- SECÇÃO PRINCIPAL - ACABAMENTO E DETALHES - END -->
+
+
 	<?php endif; ?>
+	<!-- FIM DO CASO 2 - ACABAMENTO E DETALHES - END -->
 
-	<!-- SECÇÃO PRINCIPAL - VIDEOS -->
-
+	<!-- CASO 3 - VIDEOS - START-->
 	<?php if ($show_page['pg'] == "videos"): ?>
+
+		<!-- SECÇÃO PRINCIPAL - VIDEOS - START -->
 
 		<section>
 			<div class="container">
@@ -464,138 +348,37 @@ get_header(); ?>
 			<div class="container">
 				<div class="row">
 
-					<!-- SECÇÃO PRINCIPAL - VIDEOS -->
+					<!-- SECÇÃO PRINCIPAL - VIDEOS - START -->
 					<div class="col-md-8 col-12">
 
 						<div class="planta1">
 
-							<iframe width="560" height="315" onload="resize(this)" class="video-player" src="https://www.youtube.com/embed/u31qwQUeGuM?si=TFH5q2fGAd8-U5h0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							<iframe width="560" height="315" onload="resize(this)" class="video-player" src="<?= isset($data_page['video_1'][0]) ? $data_page['video_1'][0] : 'https://www.youtube.com/embed/u31qwQUeGuM?si=TFH5q2fGAd8-U5h0'?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 						</div>
 
 						<div class="planta2">
-							<iframe width="560" onload="resize(this)" class="video-player" src="https://www.youtube.com/embed/u31qwQUeGuM?si=TFH5q2fGAd8-U5h0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							<iframe width="560" onload="resize(this)" class="video-player" src="<?= isset($data_page['video_2'][0]) ? $data_page['video_2'][0] : 'https://www.youtube.com/embed/u31qwQUeGuM?si=TFH5q2fGAd8-U5h0'?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 						</div>
 
 					</div>
+					<!-- SECÇÃO PRINCIPAL - VIDEOS - END -->
 
-					<!-- SECÇÃO PRINCIPAL - SIDEBAR -->
+
+					<!-- SIDE BAR DIREITA - START -->
 					<div class="col-md-4 col-12">
-						<div class="bg-cinza h-100 w-100">
-							<div class="d-flex align-items-center">
-								<div class="title mr-4">
-									<h4>Conheça a <?= the_title(); ?></h4>
-								</div>
-								<span class="metros"><?php isset($data_page['metros_casa'][0]) ? print_r($data_page['metros_casa'][0]) : ''; ?></span>
-							</div>
-							<h6>A partir de R$<?= isset($data_page['valor_casa'][0]) ? $data_page['valor_casa'][0] : ''; ?></h6>
-							<div class="side-right1">
-								<h6>Disponibilidade da casa de acordo com o lote</h6>
-								<b><?= isset($data_page['lote_minimo'][0]) ? $data_page['lote_minimo'][0] : ''; ?></b>
-							</div>
-
-							<div class="side-right1">
-								<h4><b>Nesta planta</b></h4>
-								<?php if ($data_page['checkbox_suite'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/camas.png" alt="" srcset="">
-										<span><?= $data_page['suites_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_banheiro'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/banheiro.png" alt="" srcset="">
-										<span>Banheiro social</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_lavabo'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/lavabo.png" alt="" srcset="">
-										<span>Lavabo</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_sala'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/sala_estar.png" alt="" srcset="">
-										<span>Sala de estar</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_jantar'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/sala_jantar.png" alt="" srcset="">
-										<span>Sala de Jantar</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_cozinha_integrada'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/cozinha.png" alt="" srcset="">
-										<span>Cozinha integrada</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_lavanderia'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/lavanderia.png" alt="" srcset="">
-										<span>Lavanderia</span>
-									</div>
-								<?php endif; ?>
-								<?php if ($data_page['checkbox_vaga'][0] === 'yes'): ?>
-									<div class="plantas">
-										<img src="http://localhost/Techome/wp-content/uploads/2024/09/vaga_coberta.png" alt="" srcset="">
-										<span>Vaga coberta</span>
-									</div>
-								<?php endif; ?>
-							</div>
-
-							<div class="side-right1 borda-bottom">
-								<h4 style="margin-top: 25px;"><b>Opcionais</b></h4>
-								<?php if (isset($data_page['muro_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/muro.png" alt="" srcset="">
-										<span><?= $data_page['muro_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['area_gourmet_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/gourmet.png" alt="" srcset="">
-										<span><?= $data_page['area_gourmet_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['quartos_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/camas.png" alt="" srcset="">
-										<span><?= $data_page['quartos_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['smart_kit_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/smart.png" alt="" srcset="">
-										<span><?= $data_page['smart_kit_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['cozinha_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/cozinha.png" alt="" srcset="">
-										<span><?= $data_page['cozinha_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-								<?php if (isset($data_page['grama_casa'])): ?>
-									<div class="plantas">
-										<img src="<?= $icons; ?>/grama.png" alt="" srcset="">
-										<span><?= $data_page['grama_casa'][0] ?></span>
-									</div>
-								<?php endif; ?>
-							</div>
-
-
-						</div>
+						<?php include get_stylesheet_directory() . '/sidebars/side-right.php';	?>
 					</div>
+					<!-- SIDE BAR DIREITA - END -->
+
 
 				</div>
 			</div>
 		</section>
+		<!-- SECÇÃO PRINCIPAL - VIDEOS - END -->
 
 	<?php endif; ?>
-
+	<!-- FIM DO CASO 3 - VIDEOS - END -->
 
 
 </main><!-- #main -->
