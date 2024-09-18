@@ -121,55 +121,78 @@
 	}
 </script>
 
+<style>
+	.header-bg {
+    background-color: #00260A;
+}
+
+.green-color {
+    color: #00260A;
+}
+
+.shadow {
+    text-shadow: 2px 2px 5px;
+}
+
+.selected-house {
+    background-color: #8BC751 !important;
+}
+
+.selected-post-type {
+    background-color: #d3d3d3 !important;
+}
+
+.homes div a {
+    padding: 6px 12px;
+    /* background-color: #ECECE3; */
+    text-decoration: none;
+    font-weight: 600;
+    color: #00260A;
+    font-size: 24px;
+    transition: 200ms all;
+}
+
+.homes div a:hover {
+    background-color: #ECECE3;
+
+}
+
+iframe {
+    width: 100%;
+}
+
+.btn-bottom {
+    background-color: #F3F2ED;
+    color: #00260A;
+    border-bottom: 1px solid black;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.btn-bottom:hover {
+    background-color: #8BC751;
+
+}
+
+.tipo-casa {
+    font-size: 20px;
+    background-color: #f2f1eb;
+    font-weight: 500;
+}
+
+.tipo-casa:hover {
+    background-color: #8BC751;
+
+}
+
+.escolhido {
+    background-color: #8BC751;
+}
+</style>
+
 
 <body <?php body_class(); ?>>
 
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-		* {
-			font-family: "Barlow Semi Condensed", sans-serif;
-		}
-
-		.header-bg {
-			background-color: #00260A;
-		}
-
-		.green-color {
-			color: #00260A;
-		}
-
-		.shadow {
-			text-shadow: 2px 2px 5px;
-		}
-
-		.selected-house {
-			background-color: #8BC751 !important;
-		}
-
-		.selected-post-type {
-			background-color: #d3d3d3 !important;
-		}
-
-		.homes div a {
-			padding: 6px 12px;
-			/* background-color: #ECECE3; */
-			text-decoration: none;
-			font-weight: 600;
-			color: #00260A;
-			font-size: 24px;
-			transition: 200ms all;
-		}
-
-		.homes div a:hover {
-			background-color: #ECECE3;
-
-		}
-
-		iframe {
-			width: 100%;
-		}
-	</style>
 
 	<header id="header" role="banner">
 		<section class="row justify-content-center align-items-center text-center">
@@ -245,37 +268,6 @@
 
 	</header><!-- #header -->
 
-	<style>
-		.btn-bottom {
-			background-color: #F3F2ED;
-			color: #00260A;
-			border-bottom: 1px solid black;
-			font-weight: 600;
-			font-size: 22px;
-		}
-
-		.btn-bottom:hover {
-			background-color: #8BC751;
-
-		}
-
-		.tipo-casa {
-			font-size: 20px;
-			background-color: #f2f1eb;
-			font-weight: 500;
-		}
-
-		.tipo-casa:hover {
-			background-color: #8BC751;
-
-		}
-
-		.escolhido {
-			background-color: #8BC751;
-		}
-	</style>
-
-
 	<?php for ($i = 0; $i < 18; $i++) if (is_singular('c' . $i) || is_singular('s' . $i)): ?>
 
 		<section>
@@ -288,7 +280,7 @@
 					</div>
 					<div class="col-md-4 col-12">
 						<div class="p-2 mt-4 text-center bottom-header">
-							<button id="acabamento" class="btn-bottom btn w-100 menu-interno" value="?pg=acabamento" onclick="window.location.href=('?pg=acabamento')">Acabamento e detalhes</button>
+							<button id="acabamento" class="btn-bottom btn w-100 menu-interno" value="?pg=acabamento" onclick="window.location.href=('?pg=acabamento&int=pisos')">Acabamento e detalhes</button>
 						</div>
 					</div>
 					<div class="col-md-4 col-12">
