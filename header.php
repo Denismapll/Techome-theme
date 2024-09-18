@@ -299,7 +299,7 @@ iframe {
 
 		<section class="mt-5 mb-5">
 			<div class="container">
-				<div class="row flex-wrap">
+				<div class="row flex-wrap justify-content-center">
 					<?php
 					// Função para obter o penúltimo parâmetro da URL
 					function get_penultimate_url_parameter($value)

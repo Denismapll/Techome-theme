@@ -4,6 +4,10 @@
     font-family: "Barlow Semi Condensed", sans-serif;
 }
 
+body, html {
+    overflow-x: hidden;
+}
+
 /* SINGLE PAGE */
 
 .title {
